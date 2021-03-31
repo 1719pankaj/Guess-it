@@ -75,9 +75,9 @@ class GameFragment : Fragment() {
 //            binding.wordText.text = newWord
 //        })
 
-        viewModel.timeE.observe(viewLifecycleOwner, Observer { tick->
-            binding.timerText.text = tick
-        })
+//        viewModel.timeE.observe(viewLifecycleOwner, Observer { tick->
+//            binding.timerText.text = tick
+//        })
 
 //        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
 //            binding.scoreText.text = newScore.toString()
