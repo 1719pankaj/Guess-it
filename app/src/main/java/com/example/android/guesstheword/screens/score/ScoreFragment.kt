@@ -74,7 +74,7 @@ class ScoreFragment : Fragment() {
 //        // Get args using by navArgs property delegate
 //        val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
 //        binding.scoreText.text = scoreFragmentArgs.score.toString()
-//        binding.playAgainButton.setOnClickListener { viewModel.onPlayAgain() }
+        binding.playAgainButton.setOnClickListener { viewModel.onPlayAgain() }
 //
         return binding.root
     }
