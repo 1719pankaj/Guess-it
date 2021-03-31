@@ -17,7 +17,7 @@ class GameViewModel : ViewModel() {
         // This is the number of milliseconds in a second
         const val ONE_SECOND = 1000L
         // This is the total time of the game
-        const val COUNTDOWN_TIME = 60000L
+        const val COUNTDOWN_TIME = 10000L
     }
 
     private val timer: CountDownTimer
@@ -68,6 +68,7 @@ class GameViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         Log.i("GameViewModel", "GameViewModel destroyed!")
+        timer.cancel()
     }
 
     private fun resetList() {

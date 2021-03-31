@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright 2018, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +16,14 @@
 
 package com.example.android.guesstheword.screens.score
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -56,15 +58,24 @@ class ScoreFragment : Fragment() {
         viewModelFactory = arguments?.let { ScoreFragmentArgs.fromBundle(it).score }?.let { ScoreViewModelFactory(it) }!!
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScoreViewModel::class.java)
 
-        // Get args using by navArgs property delegate
-        val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
-        binding.scoreText.text = scoreFragmentArgs.score.toString()
-        binding.playAgainButton.setOnClickListener { onPlayAgain() }
+        binding.setLifecycleOwner(this)
 
+        viewModel.score.observe(viewLifecycleOwner, Observer { finalScore ->
+            binding.scoreText.text = finalScore.toString()
+        })
+
+        viewModel.eventPlayAgain.observe(viewLifecycleOwner, Observer { playAgain ->
+            if (playAgain) {
+                findNavController().navigate(ScoreFragmentDirections.actionRestart())
+                viewModel.onPlayAgainComplete()
+            }
+        })
+
+//        // Get args using by navArgs property delegate
+//        val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
+//        binding.scoreText.text = scoreFragmentArgs.score.toString()
+//        binding.playAgainButton.setOnClickListener { viewModel.onPlayAgain() }
+//
         return binding.root
-    }
-
-    private fun onPlayAgain() {
-        findNavController().navigate(ScoreFragmentDirections.actionRestart())
     }
 }
